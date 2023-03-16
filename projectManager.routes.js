@@ -17,15 +17,33 @@ const {
 projectManagerApp.use(express.json());
 
 //define routes
-projectManagerApp.post("/:email/concerns", concerns);
-projectManagerApp.post("/:email/resourceRequest", resourceRequest);
-projectManagerApp.post("/:email/projectUpdates", projectUpdating);
+projectManagerApp.post("/:email/projectId/:projectId/concerns", concerns);
+projectManagerApp.post(
+  "/:email/projectId/:projectId/resourceRequest",
+  resourceRequest
+);
+projectManagerApp.post(
+  "/:email/projectId/:projectId/projectUpdates",
+  projectUpdating
+);
 
-projectManagerApp.get("/:email/projectDetails", projectDetails);
+projectManagerApp.get(
+  "/:email/projectId/:projectId/projectDetails",
+  projectDetails
+);
 
-projectManagerApp.get("/:email/projectUpdates", projectUpdates);
-projectManagerApp.get("/:email/teamComposition", teamComposition);
-projectManagerApp.get("/:email/projectConcerns", projectConcerns);
+projectManagerApp.get(
+  "/:email/projectId/:projectId/projectUpdates",
+  projectUpdates
+);
+projectManagerApp.get(
+  "/:email/projectId/:projectId/teamComposition",
+  teamComposition
+);
+projectManagerApp.get(
+  "/:email/projectId/:projectId/projectConcerns",
+  projectConcerns
+);
 
 //export router object
 module.exports = projectManagerApp;

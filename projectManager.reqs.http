@@ -1,12 +1,12 @@
-POST http://localhost:4000/pulse/projectManager/pm2@westagilelabs.com/concerns
+POST http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/1/concerns
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MzA1NDksImV4cCI6MTY3ODkwMzM0OX0.fnPA7XrIhuIWc3eYtNlhc0G6uKyUTR0sT-Cr3ICRFUA .Project Manager
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxNzksImV4cCI6MTY3OTE0ODk3OX0.wiNN64dpuVkK7RQMy3BVOcj1YDca8mvrZkvBa1SI0H4 .projectManager
 
 {
   
-  "projectId":"2",
+  "projectId":"1",
   "concernDesc":"Doubt",
-  "concernRaisedBy":"pm2@westagilelabs.com",
+  "concernRaisedBy":"pm1@westagilelabs.com",
   "concernRaisedOn":"2023-10-10",
   "concernSeverity":"Medium",
   "concernIndicator":"green",
@@ -15,9 +15,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MzA1N
   "concernMitigatedDate":"2023-03-10"
 }
 ###
-POST http://localhost:4000/pulse/projectManager/pm2@westagilelabs.com/projectUpdates
+POST http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/1/projectUpdates
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MzA1NDksImV4cCI6MTY3ODkwMzM0OX0.fnPA7XrIhuIWc3eYtNlhc0G6uKyUTR0sT-Cr3ICRFUA .Project Manager
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxNzksImV4cCI6MTY3OTE0ODk3OX0.wiNN64dpuVkK7RQMy3BVOcj1YDca8mvrZkvBa1SI0H4 .projectManager
 
 {
   
@@ -31,9 +31,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MzA1N
   
 }
 ###
-POST http://localhost:4000/Pulse/ProjectManager/pm2@westagilelabs.com/ResourceRequest
+POST http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/1/resourceRequest
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MzA1NDksImV4cCI6MTY3ODkwMzM0OX0.fnPA7XrIhuIWc3eYtNlhc0G6uKyUTR0sT-Cr3ICRFUA .Project Manager
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxNzksImV4cCI6MTY3OTE0ODk3OX0.wiNN64dpuVkK7RQMy3BVOcj1YDca8mvrZkvBa1SI0H4 .projectManager
 
 {
   
@@ -44,18 +44,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MzA1N
 }
 
 ###p
-GET http://localhost:4000/pulse/projectManager/pm4@westagilelabs.com/projectDetails
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MzA1NDksImV4cCI6MTY3ODkwMzM0OX0.fnPA7XrIhuIWc3eYtNlhc0G6uKyUTR0sT-Cr3ICRFUA .Project Manager
+GET http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/1/projectDetails
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxNzksImV4cCI6MTY3OTE0ODk3OX0.wiNN64dpuVkK7RQMy3BVOcj1YDca8mvrZkvBa1SI0H4 .projectManager
 
 ###
-GET http://localhost:4000/Pulse/ProjectManager/pm2@westagilelabs.com/ProjectUpdates
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MzA1NDksImV4cCI6MTY3ODkwMzM0OX0.fnPA7XrIhuIWc3eYtNlhc0G6uKyUTR0sT-Cr3ICRFUA .Project Manager
+GET http://localhost:4000/Pulse/projectManager/pm1@westagilelabs.com/projectId/2/projectUpdates
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxNzksImV4cCI6MTY3OTE0ODk3OX0.wiNN64dpuVkK7RQMy3BVOcj1YDca8mvrZkvBa1SI0H4 .projectManager
 ###
-GET http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/teamComposition
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MzA1NDksImV4cCI6MTY3ODkwMzM0OX0.fnPA7XrIhuIWc3eYtNlhc0G6uKyUTR0sT-Cr3ICRFUA .Project Manager
+GET http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/1/teamComposition
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxNzksImV4cCI6MTY3OTE0ODk3OX0.wiNN64dpuVkK7RQMy3BVOcj1YDca8mvrZkvBa1SI0H4 .projectManager
 
 ###
-GET http://localhost:4000/Pulse/ProjectManager/pm1@westagilelabs.com/ProjectConcerns
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MzA1NDksImV4cCI6MTY3ODkwMzM0OX0.fnPA7XrIhuIWc3eYtNlhc0G6uKyUTR0sT-Cr3ICRFUA .Project Manager
+GET http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/1/projectConcerns
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxNzksImV4cCI6MTY3OTE0ODk3OX0.wiNN64dpuVkK7RQMy3BVOcj1YDca8mvrZkvBa1SI0H4 .projectManager
 
 ###
