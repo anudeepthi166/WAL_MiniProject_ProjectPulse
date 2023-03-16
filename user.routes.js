@@ -16,16 +16,16 @@ userApp.use(express.json());
 
 //define routes
 //register
-userApp.post("/register", registeration);
+userApp.post("/:email/register", registeration);
 
 //login
-userApp.post("/login", login);
+userApp.post("/:email/login", login);
 
 //forgot Password
-userApp.post("/forgotPassword", forgotPassword);
+userApp.post("/:email/forgotPassword", forgotPassword);
 
 //Reset Password
-userApp.put("/resetPassword", resetPassword);
+userApp.put("/:email/resetPassword", resetPassword);
 
 //RoleMapping
 userApp.post("/roleMapping", roleMapping);
