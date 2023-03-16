@@ -4,28 +4,28 @@ const projectManagerApp = express.Router();
 
 //import controllers
 const {
-  Concerns,
-  ProjectConcerns,
-  ProjectDetails,
-  ProjectUpdates,
-  ProjectUpdating,
-  Resource_Request,
-  TeamComposition,
+  concerns,
+  projectConcerns,
+  projectDetails,
+  projectUpdates,
+  projectUpdating,
+  resourceRequest,
+  teamComposition,
 } = require("../controllers/projectManager.controller");
 
 //Body Parser
 projectManagerApp.use(express.json());
 
 //define routes
-projectManagerApp.post("/:email/Concerns", Concerns);
-projectManagerApp.post("/:email/ResourceRequest", Resource_Request);
-projectManagerApp.post("/:email/ProjectUpdates", ProjectUpdating);
+projectManagerApp.post("/:email/concerns", concerns);
+projectManagerApp.post("/:email/resourceRequest", resourceRequest);
+projectManagerApp.post("/:email/projectUpdates", projectUpdating);
 
-projectManagerApp.get("/:email/ProjectDetails", ProjectDetails);
+projectManagerApp.get("/:email/projectDetails", projectDetails);
 
-projectManagerApp.get("/:email/ProjectUpdates", ProjectUpdates);
-projectManagerApp.get("/:email/TeamComposition", TeamComposition);
-projectManagerApp.get("/:email/ProjectConcerns", ProjectConcerns);
+projectManagerApp.get("/:email/projectUpdates", projectUpdates);
+projectManagerApp.get("/:email/teamComposition", teamComposition);
+projectManagerApp.get("/:email/projectConcerns", projectConcerns);
 
 //export router object
 module.exports = projectManagerApp;
