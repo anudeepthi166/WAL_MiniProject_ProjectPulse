@@ -4,46 +4,50 @@ const gdoHeadApp = express.Router();
 
 //import controllers
 const {
-  AddTeamMembers,
-  PortfolioDashboard,
-  ProjectConcerns,
-  ProjectDetails,
-  ProjectPortfolioDashboard,
-  ProjectUpdates,
-  TeamComposition,
+  addTeamMembers,
+  portfolioDashboard,
+  projectConcerns,
+  projectDetails,
+  projectPortfolioDashboard,
+  projectUpdates,
+  teamComposition,
   updatingTeamMembers,
   deletingTeamMembers,
+  resourceRequest,
 } = require("../controllers/gdoHead.controllers");
 
 //Body Parser
 gdoHeadApp.use(express.json());
 
 //define routes
-gdoHeadApp.post("/TeamMembers", AddTeamMembers);
-gdoHeadApp.put("/TeamMembers/:gdoHead", updatingTeamMembers);
-gdoHeadApp.delete("/:gdoHead/TeamMembers/:email", deletingTeamMembers);
-gdoHeadApp.get("/PortfolioDashboard/:email", PortfolioDashboard);
+gdoHeadApp.post("/teamMembers", addTeamMembers);
+gdoHeadApp.put("/teamMembers/:gdoHead", updatingTeamMembers);
+gdoHeadApp.delete("/:gdoHead/teamMembers/:email", deletingTeamMembers);
+gdoHeadApp.get("/portfolioDashboard/:email", portfolioDashboard);
 gdoHeadApp.get(
-  "/PortfolioDashboard/:email/:project_id",
-  ProjectPortfolioDashboard
+  "/portfolioDashboard/:email/:project_id",
+  projectPortfolioDashboard
 );
 gdoHeadApp.get(
-  "/PortfolioDashboard/:email/:project_id/ProjectDetails",
-  ProjectDetails
+  "/portfolioDashboard/:email/:project_id/projectDetails",
+  projectDetails
 );
 
 gdoHeadApp.get(
-  "/PotfolioDashboard/:email/:project_id/ProjectUpdates",
-  ProjectUpdates
+  "/portfolioDashboard/:email/:project_id/projectUpdates",
+  projectUpdates
 );
 gdoHeadApp.get(
-  "/PotfolioDashboard/:email/:project_id/TeamComposition",
-  TeamComposition
+  "/portfolioDashboard/:email/:project_id/teamComposition",
+  teamComposition
 );
 gdoHeadApp.get(
   "/PotfolioDashboard/:email/:project_id/ProjectConcerns",
-  ProjectConcerns
+  projectConcerns
 );
-
+gdoHeadApp.get(
+  "/PotfolioDashboard/:email/:project_id/resourceRequest",
+  resourceRequest
+);
 //export router object
 module.exports = gdoHeadApp;

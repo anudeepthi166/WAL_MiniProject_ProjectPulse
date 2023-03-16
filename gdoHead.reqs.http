@@ -1,27 +1,28 @@
-POST http://localhost:4000/Pulse/GDOHead/TeamMembers
+POST http://localhost:4000/pulse/gdoHead/teamMembers
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3Mjk3MDMsImV4cCI6MTY3ODkwMjUwM30.6g3mVMmxVWRQYbBQMUaCjKFfgL4_CpUUIt1PfeFZr3c .GDO Head
 
 {
-  "Email":"a@westagilelabs.com",
-  "Project_id":"1",
-  "Role":"Developer",
-  "Start_Date":"2022-01-20",
-  "End_Date":null,
-  "Status":"Active",
-  "Exposed_To_Client":false,
-  "Billing_Status":"Billed"
+  "email":"c@westagilelabs.com",
+  "projectId":"6",
+  "role":"tester",
+  "startDate":"2022-01-20",
+  "endDate":null,
+  "status":"cctive",
+  "exposedToClient":false,
+  "billingStatus":"billed",
+  "allocation_Type":"temperory"
 }
 
 ###
-PUT http://localhost:4000/Pulse/GDOHead/TeamMembers/g1@westagilelabs.com
+PUT http://localhost:4000/Pulse/gdoHead/teamMembers/g1@westagilelabs.com
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3Mjk3MDMsImV4cCI6MTY3ODkwMjUwM30.6g3mVMmxVWRQYbBQMUaCjKFfgL4_CpUUIt1PfeFZr3c .GDO Head
 
 {
-  "Email":"a@westagilelabs.com",
-  "Project_id":"1",
-  "Allocation_Type":"Permanent"
+  "email":"a@westagilelabs.com",
+  "projectId":"1",
+  "allocationType":"permanent"
   
 }
 ###
@@ -30,26 +31,28 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3Mjk3MDMsImV4cCI6MTY3ODkwMjUwM30.6g3mVMmxVWRQYbBQMUaCjKFfgL4_CpUUIt1PfeFZr3c .GDO Head
 
 ###
-GET http://localhost:4000/Pulse/GDOHead/PortfolioDashboard/g1@westagilelabs.com
+GET http://localhost:4000/pulse/gdoHead/portfolioDashboard/visnu@westagilelabs.com
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3Mjk3MDMsImV4cCI6MTY3ODkwMjUwM30.6g3mVMmxVWRQYbBQMUaCjKFfgL4_CpUUIt1PfeFZr3c .GDO Head
 ###
-GET http://localhost:4000/Pulse/GDOHead/PortfolioDashboard/g1@westagilelabs.com/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3Mjk3MDMsImV4cCI6MTY3ODkwMjUwM30.6g3mVMmxVWRQYbBQMUaCjKFfgL4_CpUUIt1PfeFZr3c .GDO Head
-
-
-###
-GET http://localhost:4000/Pulse/GDOHead/PortfolioDashboard/g1@westagilelabs.com/1/ProjectDetails
+GET http://localhost:4000/pulse/gdoHead/portfolioDashboard/g1@westagilelabs.com/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3Mjk3MDMsImV4cCI6MTY3ODkwMjUwM30.6g3mVMmxVWRQYbBQMUaCjKFfgL4_CpUUIt1PfeFZr3c .GDO Head
 
+
 ###
-GET http://localhost:4000/Pulse/GDOHead/PotfolioDashboard/g1@westagilelabs.com/2/ProjectUpdates
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3Mjk3MDMsImV4cCI6MTY3ODkwMjUwM30.6g3mVMmxVWRQYbBQMUaCjKFfgL4_CpUUIt1PfeFZr3c .GDO Head
-###
-GET http://localhost:4000/Pulse/GDOHead/PotfolioDashboard/g1@westagilelabs.com/1/TeamComposition
+GET http://localhost:4000/pulse/gdoHead/portfolioDashboard/g1@westagilelabs.com/1/projectDetails
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3Mjk3MDMsImV4cCI6MTY3ODkwMjUwM30.6g3mVMmxVWRQYbBQMUaCjKFfgL4_CpUUIt1PfeFZr3c .GDO Head
 
 ###
-GET http://localhost:4000/Pulse/GDOHead/PotfolioDashboard/g1@westagilelabs.com/1/ProjectConcerns
+GET http://localhost:4000/pulse/gdoHead/portfolioDashboard/g1@westagilelabs.com/1/projectUpdates
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3Mjk3MDMsImV4cCI6MTY3ODkwMjUwM30.6g3mVMmxVWRQYbBQMUaCjKFfgL4_CpUUIt1PfeFZr3c .GDO Head
+###
+GET http://localhost:4000/pulse/gdoHead/portfolioDashboard/visnu@westagilelabs.com/6/teamComposition
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3Mjk3MDMsImV4cCI6MTY3ODkwMjUwM30.6g3mVMmxVWRQYbBQMUaCjKFfgL4_CpUUIt1PfeFZr3c .GDO Head
 
 ###
+GET http://localhost:4000/Pulse/GDOHead/PotfolioDashboard/g1@westagilelabs.com/2/ProjectConcerns
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3Mjk3MDMsImV4cCI6MTY3ODkwMjUwM30.6g3mVMmxVWRQYbBQMUaCjKFfgL4_CpUUIt1PfeFZr3c .GDO Head
+
+###
+GET http://localhost:4000/Pulse/GDOHead/PotfolioDashboard/g1@westagilelabs.com/1/resourceRequest
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3Mjk3MDMsImV4cCI6MTY3ODkwMjUwM30.6g3mVMmxVWRQYbBQMUaCjKFfgL4_CpUUIt1PfeFZr3c .GDO Head

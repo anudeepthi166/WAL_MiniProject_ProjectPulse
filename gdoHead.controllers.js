@@ -2,21 +2,23 @@
 const expressasynchandler = require("express-async-handler");
 
 //import Model
-const { Project } = require("../db/models/Project.model");
-const { Client } = require("../db/models/Client.model");
-const { TeamMember } = require("../db/models/TeamMembers.model");
+const { Project } = require("../db/models/project.model");
+const { Resource_Request } = require("../db/models/resourceRequest.model");
+const { Client } = require("../db/models/client.model");
+const { TeamMember } = require("../db/models/teamMembers.model");
 const { sequelize } = require("../db/db.config");
 
 //import Op
 const { Op } = require("sequelize");
 
 //----------------------------------------------------------ADD TEAM MEMBERS---------------------------------------------//
-exports.AddTeamMembers = expressasynchandler(async (req, res) => {
-  let TeamMembers = await TeamMember.create(req.body);
-  if (TeamMembers) {
+exports.addTeamMembers = expressasynchandler(async (req, res) => {
+  //inserti into teamMembers Table
+  let teamMembers = await TeamMember.create(req.body);
+  if (teamMembers) {
     res.status(201).send({
       message: "Team Details Added",
-      payload: TeamMembers.dataValues,
+      payload: teamMembers.dataValues,
     });
   }
 });
@@ -24,13 +26,13 @@ exports.AddTeamMembers = expressasynchandler(async (req, res) => {
 exports.updatingTeamMembers = expressasynchandler(async (req, res) => {
   //Check Project Under This GDO
   let projects = await Project.findAll({
-    where: { GDO_Head: req.params.gdoHead },
+    where: { gdoHead: req.params.gdoHead },
   });
 
   let result = false;
-  let project_id = req.body.Project_id;
+  let project_id = req.body.project_id;
   for (let project of projects) {
-    if (project.dataValues.Project_id == project_id) {
+    if (project.dataValues.projectId == project_id) {
       result = true;
     }
   }
@@ -47,67 +49,75 @@ exports.updatingTeamMembers = expressasynchandler(async (req, res) => {
   }
 });
 
-//----------------------------------------------------------UPDATE TEAM MEMBERS---------------------------------------------//
+//----------------------------------------------------------DELETE TEAM MEMBERS---------------------------------------------//
 exports.deletingTeamMembers = expressasynchandler(async (req, res) => {
   //get project_id of that Employee(Team Member)
   let teamMember = await TeamMember.findOne({
-    where: { Email: req.params.email },
+    where: { email: req.params.email },
   });
   if (teamMember) {
     //get projects under this gdo
     let projects = await Project.findAll({
-      where: { GDO_Head: req.params.gdoHead },
+      where: { gdoHead: req.params.gdoHead },
     });
     let result = false;
     for (let project of projects) {
-      console.log("-----------", project.dataValues.Project_id);
-      if (project.dataValues.Project_id == teamMember.dataValues.Project_id) {
+      //console.log("-----------", project.dataValues.Project_id);
+      if (project.dataValues.projectId == teamMember.dataValues.projectId) {
         result = true;
       }
     }
     if (result) {
+      //delete the memeber from Team
       let deleted = await TeamMember.destroy({
         where: { Email: req.params.email },
       });
 
+      //deleted
       if (deleted) {
         res.status(200).send({ message: "Deleted The Team Member" });
-      } else {
+      }
+      //Not deleted
+      else {
         res.status(404).send({ message: "No Team Member with that Email" });
       }
-    } else {
+    }
+    //
+    else {
       res.send({ message: "This Team Member is under Another GDO Head" });
     }
-  } else {
+  }
+  //Team Member Not Exists
+  else {
     res.status(404).send({ message: "Team Member not exists" });
   }
 });
 
 //--------------------------------------------------PORTFOLIO DASHBOARD-------------------------------------------------------//
-exports.PortfolioDashboard = expressasynchandler(async (req, res) => {
+exports.portfolioDashboard = expressasynchandler(async (req, res) => {
   let bearerToken = req.headers.authorization;
-  let Role = bearerToken.split(".")[3];
-  if (Role == "GDO Head") {
+  let role = bearerToken.split(".")[3];
+  if (role == "GDO Head") {
     let projects = await Project.findAll({
       //include model
       include: {
         model: Client,
         attributes: {
-          exclude: ["Client_id"],
+          exclude: ["clientId"],
         },
       },
 
       attributes: {
         exclude: [
-          "Project_id",
-          "GDO_Head",
-          "Project_Manager",
-          "Client_id",
-          "Project_Domain",
-          "Project_Type",
+          "projectId",
+          "gdoHead",
+          "projectManager",
+          "clientId",
+          "projectDomain",
+          "projectType",
         ],
       },
-      where: { GDO_Head: req.params.email },
+      where: { gdoHead: req.params.email },
     });
 
     //Send Response
@@ -116,37 +126,37 @@ exports.PortfolioDashboard = expressasynchandler(async (req, res) => {
 });
 
 //--------------------------------------------------SPECIFIC PROJECT-------------------------------------------------------//
-exports.ProjectPortfolioDashboard = expressasynchandler(async (req, res) => {
+exports.projectPortfolioDashboard = expressasynchandler(async (req, res) => {
   let bearerToken = req.headers.authorization;
-  let Role = bearerToken.split(".")[3];
-  if (Role == "GDO Head") {
+  let role = bearerToken.split(".")[3];
+  if (role == "GDO Head") {
     //get details
 
     let project = await Project.findOne({
-      where: { Project_id: req.params.project_id, GDO_Head: req.params.email },
+      where: { projectId: req.params.project_id, gdoHead: req.params.email },
       attributes: {
         exclude: [
-          "Project_id",
-          "Project_Name",
-          "GDO_Head",
-          "Project_Manager",
-          "Project_Status",
-          "Project_Start_Date",
-          "Project_End_Date",
-          "Project_Domain",
-          "Project_Type",
-          "Client_id",
+          "project_id",
+          "project_Name",
+          "gdoHead",
+          "projectManager",
+          "projectStatus",
+          "projectStartDate",
+          "projectEndDate",
+          "projectDomain",
+          "projectType",
+          "clientId",
         ],
       },
     });
     let [count] = await sequelize.query(
-      "select count(Email) as Team_Count from Team_Members where Project_id=? and Billing_Status=?",
+      "select count(Email) as teamCount from teamMembers where projectId=? and billingStatus=?",
       {
         replacements: [req.params.project_id, "Billed"],
       }
     );
     if (project) {
-      project.dataValues.Team_Size = count[0].Team_Count;
+      project.dataValues.teamSize = count[0].teamcount;
       res.status(200).send({ message: "Project", payload: project });
     } else {
       res
@@ -157,22 +167,22 @@ exports.ProjectPortfolioDashboard = expressasynchandler(async (req, res) => {
 });
 
 //-----------------------------------------------------VIEW SPECIFIC PROJECT DETAILS----------------------------------------//
-exports.ProjectDetails = expressasynchandler(async (req, res) => {
+exports.projectDetails = expressasynchandler(async (req, res) => {
   let bearerToken = req.headers.authorization;
-  let Role = bearerToken.split(".")[3];
-  if (Role == "GDO Head") {
+  let role = bearerToken.split(".")[3];
+  if (role == "GDO Head") {
     //Get Specific Project Details
     let project = await Project.findOne({
-      where: { Project_id: req.params.project_id, GDO_Head: req.params.email },
+      where: { projectId: req.params.project_id, gdoHead: req.params.email },
       include: {
         model: Client,
         attributes: {
-          exclude: ["Client_id"],
+          exclude: ["clientId"],
         },
       },
 
       attributes: {
-        exclude: ["Project_id", "GDO_Head", "Project_Manager", "Client_id"],
+        exclude: ["projectId", "gdoHead", "projectManager", "clientId"],
       },
     });
     if (project) {
@@ -186,22 +196,22 @@ exports.ProjectDetails = expressasynchandler(async (req, res) => {
 });
 
 //-----------------------------------------------------VIEW SPECIFIC PROJECT UPDATES----------------------------------------//
-exports.ProjectUpdates = expressasynchandler(async (req, res) => {
+exports.projectUpdates = expressasynchandler(async (req, res) => {
   let bearerToken = req.headers.authorization;
   let Role = bearerToken.split(".")[3];
   if (Role == "GDO Head") {
     //Check Whether Project under this GDO Or Not
     let projects = await Project.findAll({
-      where: { GDO_Head: req.params.email },
+      where: { gdoHead: req.params.email },
     });
     //Creating New Date
-    const Today_Date = new Date();
+    const today_Date = new Date();
     //Create Two Weeks Before Date
-    const Two_Weeks_Before_Date = new Date();
-    Two_Weeks_Before_Date.setDate(Today_Date.getDate() - 14);
+    const two_Weeks_Before_Date = new Date();
+    two_Weeks_Before_Date.setDate(today_Date.getDate() - 14);
     //get updates
     let updates = await sequelize.query(
-      "select Project_Status_Update,Schedule_Status,Resourcing_Status,Quality_Status,Waiting_For_Client_Inputs,Updated_On from Projects  inner join Project_Updates where GDO_Head=? and Projects.Project_id=?",
+      "select projectStatusUpdate,ScheduleStatus,ResourcingStatus,QualityStatus,WaitingForClientInputs,UpdatedOn from projects  inner join projectUpdates where gdoHead=? and projects.projectId=?",
       {
         replacements: [req.params.email, req.params.project_id],
       }
@@ -218,21 +228,21 @@ exports.ProjectUpdates = expressasynchandler(async (req, res) => {
 });
 
 //-----------------------------------------------------VIEW SPECIFIC PROJECT TEAM COMPOSITION----------------------------------------//
-exports.TeamComposition = expressasynchandler(async (req, res) => {
+exports.teamComposition = expressasynchandler(async (req, res) => {
   let bearerToken = req.headers.authorization;
-  let Role = bearerToken.split(".")[3];
-  if (Role == "GDO Head") {
+  let role = bearerToken.split(".")[3];
+  if (role == "GDO Head") {
     //get team details
-    let TeamMembers = await sequelize.query(
-      "select Email,Role,Start_Date,End_Date,Status,Exposed_To_Client,Billing_Status from Projects inner join Team_Members where GDO_Head=? and Projects.Project_id=?",
+    let teamMembers = await sequelize.query(
+      "select email,role,startDate,endDate,status,exposedToClient,billingStatus from projects inner join teamMembers where gdoHead=? and projects.projectId=?",
       { replacements: [req.params.email, req.params.project_id] }
     );
 
-    if (TeamMembers) {
-      if (TeamMembers.length) {
+    if (teamMembers) {
+      if (teamMembers.length) {
         res.send({
           message: "Project Team Composition",
-          payload: TeamMembers[0],
+          payload: teamMembers[0],
         });
       } else {
         res.status(200).send({ message: "No Team Members Under This Project" });
@@ -244,14 +254,14 @@ exports.TeamComposition = expressasynchandler(async (req, res) => {
 });
 
 //-----------------------------------------------------VIEW SPECIFIC PROJECT CONCERNS----------------------------------------//
-exports.ProjectConcerns = expressasynchandler(async (req, res) => {
+exports.projectConcerns = expressasynchandler(async (req, res) => {
   let bearerToken = req.headers.authorization;
-  let Role = bearerToken.split(".")[3];
-  if (Role == "GDO Head") {
+  let role = bearerToken.split(".")[3];
+  if (role == "GDO Head") {
     //get concerns
 
     let concerns = await sequelize.query(
-      "select Projects.Project_id,Concern_Desc,Concern_Raised_By,Concern_Raised_On,Concern_Severity,Concern_Raised_From_Client,Concern_Status,Concern_Mitigated_Date from Projects inner join Concerns where GDO_Head=? and Projects.Project_id=?",
+      "select projects.projectId,concernDesc,concernRaisedBy,concernRaisedOn,ConcernSeverity,ConcernRaisedFromClient,ConcernStatus,ConcernMitigatedDate from projects inner join concerns where gdoHead=? and projects.projectId=?",
       { replacements: [req.params.email, req.params.project_id] }
     );
 
@@ -262,5 +272,17 @@ exports.ProjectConcerns = expressasynchandler(async (req, res) => {
     } else {
       res.send({ message: " Contact This Project GDO Head Or Admin" });
     }
+  }
+});
+
+//-----------------------------------------------------VIEW RESOURCE REQUEST----------------------------------------//
+exports.resourceRequest = expressasynchandler(async (req, res) => {
+  //get resource requests
+  let resources = await sequelize.query(
+    "select requestRaisedBy,projects.projectId,resourceDesc from resourceRequests inner join projects where gdoHead=?",
+    { replacements: [req.params.email] }
+  );
+  if (resources) {
+    res.status(200).send({ message: "Resource Request", payload: resources });
   }
 });
