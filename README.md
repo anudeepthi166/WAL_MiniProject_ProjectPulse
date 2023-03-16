@@ -29,7 +29,7 @@
   
   For this Project Create a database named ```Project_Pulse```
   
-  Here,We assumed No employee details are stored in the database ,so To store all the Employee details ,I have created a seperate Route,By which one can register the Employee 
+  Here,We assumed  some employee details are stored in the database ,and when the super admin assign some roles then one can able to do registrationa and they can do login
   
  # OVERVIEW
  
