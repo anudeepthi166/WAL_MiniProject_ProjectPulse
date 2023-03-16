@@ -2,13 +2,13 @@
 const expressasynchandler = require("express-async-handler");
 
 //import  Model
-const { Project } = require("../db/models/Project.model");
-const { Client } = require("../db/models/Client.model");
-const { ProjectUpdate } = require("../db/models/ProjectUpdate.model");
-const { Concern } = require("../db/models/Concern.model");
-const { Resource_Request } = require("../db/models/ResourceRequest.model");
+const { Project } = require("../db/models/project.model");
+const { Client } = require("../db/models/client.model");
+const { ProjectUpdate } = require("../db/models/projectUpdate.model");
+const { Concern } = require("../db/models/concern.model");
+const { Resource_Request } = require("../db/models/resourceRequest.model");
 const { sequelize } = require("../db/db.config");
-const { Employee } = require("../db/models/Employee.model");
+const { Employee } = require("../db/models/employee.model");
 
 //import Op
 const { Op } = require("sequelize");
@@ -29,14 +29,14 @@ const transporter = nodemailer.createTransport({
 });
 
 //----------------------------------------------------------RAISE CONCERNS---------------------------------------------//
-exports.Concerns = expressasynchandler(async (req, res) => {
+exports.concerns = expressasynchandler(async (req, res) => {
   //get projects under this PROJECT MANAGER
   let projects = await Project.findOne({
-    where: { Project_Manager: req.params.email },
+    where: { projectManager: req.params.email },
   });
   if (projects) {
     //check both Project_id's
-    if (projects.dataValues.Project_id == req.body.Project_id) {
+    if (projects.dataValues.projectId == req.body.projectId) {
       //If equal perform the action
       let concerns = await Concern.create(req.body);
       if (concerns) {
@@ -56,14 +56,14 @@ exports.Concerns = expressasynchandler(async (req, res) => {
 });
 
 //----------------------------------------------------------ADD PROJECT UPDATES--------------------------------------------//
-exports.ProjectUpdating = expressasynchandler(async (req, res) => {
+exports.projectUpdating = expressasynchandler(async (req, res) => {
   //get projects under this PROJECT MANAGER
   let projects = await Project.findOne({
-    where: { Project_Manager: req.params.email },
+    where: { projectManager: req.params.email },
   });
   //check both Project_id's
   if (projects) {
-    if (projects.dataValues.Project_id == req.body.Project_id) {
+    if (projects.dataValues.projectId == req.body.projectId) {
       //If equal perform the action
       let updates = await ProjectUpdate.create(req.body);
       if (updates) {
@@ -81,26 +81,26 @@ exports.ProjectUpdating = expressasynchandler(async (req, res) => {
 });
 
 //----------------------------------------------------------RAISE RESOURCE REQUEST---------------------------------------------//
-exports.Resource_Request = expressasynchandler(async (req, res) => {
+exports.resourceRequest = expressasynchandler(async (req, res) => {
   //get projects under this PROJECT MANAGER
   let projects = await Project.findOne({
-    where: { Project_Manager: req.params.email },
+    where: { projectManager: req.params.email },
   });
   if (projects) {
     //check both Project_id's
-    if (projects.dataValues.Project_id == req.body.Project_id) {
+    if (projects.dataValues.projectId == req.body.projectId) {
       //If equal perform the action
       let resource = await Resource_Request.create(req.body);
 
       if (resource) {
         //Get The GDO AND ADMIN
         let gdoHead = await Project.findOne({
-          where: { Project_id: req.body.Project_id },
+          where: { projectId: req.body.projectId },
         });
 
-        let admin = await Employee.findAll({ where: { Role: "Admin User" } });
+        let admin = await Employee.findAll({ where: { role: "Admin User" } });
 
-        let admins = admin.map((userObject) => userObject.dataValues.Email);
+        let admins = admin.map((userObject) => userObject.dataValues.email);
 
         //Write The Mail
         let mailOptions = {
@@ -136,20 +136,20 @@ exports.Resource_Request = expressasynchandler(async (req, res) => {
 });
 
 //-----------------------------------------------------VIEW SPECIFIC PROJECT DETAILS----------------------------------------//
-exports.ProjectDetails = expressasynchandler(async (req, res) => {
+exports.projectDetails = expressasynchandler(async (req, res) => {
   //Get Specific Project Details
 
   let project = await Project.findOne({
-    where: { Project_Manager: req.params.email },
+    where: { projectManager: req.params.email },
     include: {
       model: Client,
       attributes: {
-        exclude: ["Client_id"],
+        exclude: ["clientId"],
       },
     },
 
     attributes: {
-      exclude: ["Project_id", "GDO_Head", "Project_Manager", "Client_id"],
+      exclude: ["projectId", "gdoHead", "projectManager", "clientId"],
     },
   });
   if (project) {
@@ -160,19 +160,19 @@ exports.ProjectDetails = expressasynchandler(async (req, res) => {
 });
 
 //-----------------------------------------------------VIEW SPECIFIC PROJECT UPDATES----------------------------------------//
-exports.ProjectUpdates = expressasynchandler(async (req, res) => {
+exports.projectUpdates = expressasynchandler(async (req, res) => {
   //get projects under this PROJECT MANAGER
   let projects = await Project.findOne({
-    where: { Project_Manager: req.params.email },
+    where: { projectManager: req.params.email },
   });
 
   //if projects are under this Project Manager
   if (projects) {
     //Creating New Date
-    const Today_Date = new Date();
+    const today_Date = new Date();
     //Create Two Weeks Before Date
-    const Two_Weeks_Before_Date = new Date();
-    Two_Weeks_Before_Date.setDate(Today_Date.getDate() - 14);
+    const two_Weeks_Before_Date = new Date();
+    two_Weeks_Before_Date.setDate(today_Date.getDate() - 14);
 
     //get updates
     // let [updates] = await sequelize.query(
@@ -187,14 +187,14 @@ exports.ProjectUpdates = expressasynchandler(async (req, res) => {
     // );
     let updates = await ProjectUpdate.findAll({
       where: {
-        Project_id: projects.dataValues.Project_id,
-        Updated_On: {
-          [Op.between]: [Two_Weeks_Before_Date, Today_Date],
+        projectId: projects.dataValues.projectId,
+        updatedOn: {
+          [Op.between]: [two_Weeks_Before_Date, today_Date],
         },
       },
       //exclude attributes
       attributes: {
-        exclude: ["Update_id", "Project_id"],
+        exclude: ["update_id", "projectId"],
       },
     });
 
@@ -210,33 +210,33 @@ exports.ProjectUpdates = expressasynchandler(async (req, res) => {
   }
   //if no projects
   else {
-    res.status(204).send({ message: "No Projects" });
+    res.send({ message: "No Projects" });
   }
 });
 
 //-----------------------------------------------------VIEW SPECIFIC PROJECT TEAM COMPOSITION----------------------------------------//
-exports.TeamComposition = expressasynchandler(async (req, res) => {
+exports.teamComposition = expressasynchandler(async (req, res) => {
   //get projects under this PROJECT MANAGER
   let projects = await Project.findOne({
-    where: { Project_Manager: req.params.email },
+    where: { projectManager: req.params.email },
   });
 
   //if projects are under this Project Manager
   if (projects) {
     //get team details
-    let TeamMembers = await sequelize.query(
-      "select Email,Role,Start_Date,End_Date,Status,Exposed_To_Client,Billing_Status from Team_Members where Project_id=?",
-      { replacements: [projects.dataValues.Project_id] }
+    let teamMembers = await sequelize.query(
+      "select email,role,startDate,endDate,status,exposedToClient,billingStatus from teamMembers where projectId=?",
+      { replacements: [projects.dataValues.projectId] }
     );
 
-    if (TeamMembers) {
-      if (TeamMembers[0].length) {
+    if (teamMembers) {
+      if (teamMembers[0].length) {
         res.send({
           message: "Project Team Composition",
-          payload: TeamMembers[0],
+          payload: teamMembers[0],
         });
       } else {
-        res.status(204).send({ message: "No Team Members Under This Project" });
+        res.send({ message: "No Team Members Under This Project" });
       }
     }
   } else {
@@ -245,10 +245,10 @@ exports.TeamComposition = expressasynchandler(async (req, res) => {
 });
 
 //-----------------------------------------------------VIEW SPECIFIC PROJECT CONCERNS----------------------------------------//
-exports.ProjectConcerns = expressasynchandler(async (req, res) => {
+exports.projectConcerns = expressasynchandler(async (req, res) => {
   //get projects under this PROJECT MANAGER
   let projects = await Project.findOne({
-    where: { Project_Manager: req.params.email },
+    where: { projectManager: req.params.email },
   });
 
   //if projects are under this Project Manager
@@ -256,8 +256,8 @@ exports.ProjectConcerns = expressasynchandler(async (req, res) => {
     //get concerns
 
     let concerns = await sequelize.query(
-      "select Projects.Project_id,Concern_Desc,Concern_Raised_By,Concern_Raised_On,Concern_Severity,Concern_Raised_From_Client,Concern_Status,Concern_Mitigated_Date from Projects inner join Concerns where Concerns.Project_id=?",
-      { replacements: [projects.dataValues.Project_id] }
+      "select projects.projectId,concernDesc,concernRaisedBy,concernRaisedOn,concernSeverity,concernRaisedFromClient,concernStatus,concernMitigatedDate from projects inner join concerns where concerns.projectId=?",
+      { replacements: [projects.dataValues.projectId] }
     );
 
     if (concerns[0].length) {
@@ -265,7 +265,7 @@ exports.ProjectConcerns = expressasynchandler(async (req, res) => {
         .status(200)
         .send({ message: "Concerns Of This Project", payload: concerns[0] });
     } else {
-      res.status(204).send({ message: "No Concerns Raised For This Project" });
+      res.send({ message: "No Concerns Raised For This Project" });
     }
   } else {
     res.send({ message: " Contact This Project GDO Head Or Admin" });
