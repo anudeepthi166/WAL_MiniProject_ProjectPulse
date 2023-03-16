@@ -37,26 +37,45 @@ let otps = {};
 //-------------------------------------------Registration-------------------------------------//
 exports.registeration = expressasynchandler(async (req, res) => {
   //Extract fields from request body
-  let { email, employeeName, password } = req.body;
+  let { email, password } = req.body;
+  //get the role of employee
+  let employee = await Employee.findOne({ where: { email: email } });
+  if (employee) {
+    let role = employee.dataValues.role;
+    //check the role of employee
+    if (
+      role == "adminUser" ||
+      role == "gdoHead" ||
+      role == "projectManager" ||
+      role == "superAdmin" ||
+      role == "hrManager"
+    ) {
+      //Check email domain
+      if (
+        /^([A-Za-z0-9_\.])+\@(westagilelabs|WESTAGILELABS)+\.(com)$/.test(email)
+      ) {
+        //Hash the password
+        password = await bcrypt.hash(password, 5);
 
-  //Check email domain
-  if (
-    /^([A-Za-z0-9_\.])+\@(westagilelabs|WESTAGILELABS)+\.(com)$/.test(email)
-  ) {
-    //Hash the password
-    password = await bcrypt.hash(password, 5);
+        //adding employee details to database
+        let employee = await Employee.update(
+          { password: password },
+          { where: { email: email } }
+        );
 
-    //adding employee details to database
-    let employee = await Employee.create({ email, employeeName, password });
-
-    //sending employee details for conformation
-    res
-      .status(201)
-      .send({ message: "Employee Added", payload: employee.dataValues });
-  }
-  //Not Valid Gmail id
-  else {
-    res.send({ message: "Register with the Organisation Email Only" });
+        //sending employee details for conformation
+        res.status(201).send({
+          message: "Employee Regitered",
+          payload: employee.dataValues,
+        });
+      }
+      //Not Valid Gmail id
+      else {
+        res.send({ message: "Register with the Organisation Email Only" });
+      }
+    }
+  } else {
+    res.status(404).send({ message: "Employee Details not Found" });
   }
 });
 
@@ -103,7 +122,6 @@ exports.login = expressasynchandler(async (req, res) => {
             res.send({
               message: "login Success",
               token: signedToken,
-              payload: dashboard,
             });
           }
           //
@@ -205,7 +223,7 @@ exports.roleMapping = expressasynchandler(async (req, res) => {
   let bearerToken = req.headers.authorization;
   let role = bearerToken.split(".")[3];
   //check Role
-  if (role == "Super Admin") {
+  if (role == "superAdmin") {
     let employee = await Employee.findOne({ where: { email: user } });
 
     //if employee exists assign role

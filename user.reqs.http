@@ -1,46 +1,45 @@
-POST http://localhost:4000/pulse/employee/register
+POST http://localhost:4000/pulse/employee/pm1@westagilelabs.com/register
 Content-Type: application/json
 
 {
-  "email":"visnu@westagilelabs.com",
-  "employeeName":"c",
-  "password":"c"
+  "email":"pm1@westagilelabs.com",
+    "password":"pm1"
 
 }
 ###
-POST http://localhost:4000/pulse/employee/login
+POST http://localhost:4000/pulse/employee/pm1@westagilelabs.com/login
 Content-Type: application/json
 
 {
-  "email":"v@westagilelabs.com",
-  "password":"v"
+  "email":"pm1@westagilelabs.com",
+  "password":"pm1"
 }
 
 ###
-POST http://localhost:4000/pulse/employee/forgotPassword
+POST http://localhost:4000/pulse/employee/pm1@westagilelabs.com/forgotPassword
 Content-Type: application/json
 
 {
   "email":"s@westagilelabs.com"
 }
 ###
-PUT http://localhost:4000/pulse/employee/resetPassword
+PUT http://localhost:4000/pulse/employee/pm1@westagilelabs.com/resetPassword
 Content-Type: application/json
 
 {
   "email":"s@westagilelabs.com",
   "password":"ss",
-  "otp":"576616"
+  "otp":"741226"
 }
 
 
 ###
 POST http://localhost:4000/Pulse/employee/roleMapping
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3ODUxNTgsImV4cCI6MTY3ODk1Nzk1OH0.drFp-IGvFwpOxa5eX2e6BbtjOrEgTZSEw3kn8p4qD6I .Super Admin
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQxMjgsImV4cCI6MTY3OTE0NjkyOH0.nI7_IcXld5yexihWp7v5WPdRbZCOqFHkZSVgW3dlpQM .superAdmin
 
 {
   "SuperAdmin":"s@westagilelabs.com", 
-  "user":"visnu@westagilelabs.com",
-  "userRole":"gdoHead"
+  "user":"pm2@westagilelabs.com",
+  "userRole":"projectManager"
 }
