@@ -20,24 +20,16 @@ const {
 adminApp.use(express.json());
 
 //defining routes
-adminApp.post("/project", addProject);
-adminApp.put("/project", updatingProject);
-adminApp.delete("/project/:projectName", deletingProject);
-adminApp.get("/portfolioDashboard", potfolioDashboard);
-adminApp.get("/portfolioDashboard/:project_id", projectPotfolioDashboard);
-adminApp.get("/portfolioDashboard/:project_id/projectDetails", projectDetails);
-adminApp.get("/portfolioDashboard/:project_id/projectUpdates", projectUpdates);
-adminApp.get(
-  "/portfolioDashboard/:project_id/teamComposition",
-  teamComposition
-);
-adminApp.get(
-  "/portfolioDashboard/:project_id/projectConcerns",
-  projectConcerns
-);
-adminApp.get(
-  "/portfolioDashboard/:project_id/resourceRequest",
-  resourceRequest
-);
+adminApp.post("/:email/project", addProject);
+adminApp.put("/:email/project", updatingProject);
+adminApp.delete("/:email/project/:projectName", deletingProject);
+adminApp.get("/:email/portfolioDashboard", potfolioDashboard);
+adminApp.get("/:email/projectId/:project_id", projectPotfolioDashboard);
+adminApp.get("/:email/projectId/:project_id/projectDetails", projectDetails);
+adminApp.get("/:email/projectId/:project_id/projectUpdates", projectUpdates);
+adminApp.get("/:email/projectId/:project_id/teamComposition", teamComposition);
+adminApp.get("/:email/projectId/:project_id/projectConcerns", projectConcerns);
+adminApp.get("/:email/resourceRequest", resourceRequest);
+
 //export Router Object
 module.exports = adminApp;
