@@ -20,34 +20,25 @@ const {
 gdoHeadApp.use(express.json());
 
 //define routes
-gdoHeadApp.post("/teamMembers", addTeamMembers);
-gdoHeadApp.put("/teamMembers/:gdoHead", updatingTeamMembers);
+gdoHeadApp.post("/:gdoHead/teamMembers", addTeamMembers);
+gdoHeadApp.put("/:gdoHead/teamMembers", updatingTeamMembers);
 gdoHeadApp.delete("/:gdoHead/teamMembers/:email", deletingTeamMembers);
-gdoHeadApp.get("/portfolioDashboard/:email", portfolioDashboard);
+gdoHeadApp.get("/:email/portfolioDashboard", portfolioDashboard);
 gdoHeadApp.get(
-  "/portfolioDashboard/:email/:project_id",
+  "/:email/projectId/:project_id/portfolioDashboard/",
   projectPortfolioDashboard
 );
-gdoHeadApp.get(
-  "/portfolioDashboard/:email/:project_id/projectDetails",
-  projectDetails
-);
+gdoHeadApp.get("/:email/projectId/:project_id/projectDetails", projectDetails);
 
+gdoHeadApp.get("/:email/projectId/:project_id/projectUpdates", projectUpdates);
 gdoHeadApp.get(
-  "/portfolioDashboard/:email/:project_id/projectUpdates",
-  projectUpdates
-);
-gdoHeadApp.get(
-  "/portfolioDashboard/:email/:project_id/teamComposition",
+  "/:email/projectId/:project_id/teamComposition",
   teamComposition
 );
 gdoHeadApp.get(
-  "/PotfolioDashboard/:email/:project_id/ProjectConcerns",
+  "/:email/projectId/:project_id/ProjectConcerns",
   projectConcerns
 );
-gdoHeadApp.get(
-  "/PotfolioDashboard/:email/:project_id/resourceRequest",
-  resourceRequest
-);
+gdoHeadApp.get("/:email/resourceRequest", resourceRequest);
 //export router object
 module.exports = gdoHeadApp;
