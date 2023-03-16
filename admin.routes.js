@@ -1,32 +1,43 @@
 //import express and create mini express app
 const express = require("express");
-const AdminApp = express.Router();
+const adminApp = express.Router();
 
 //import controllers
 const {
-  AddProject,
-  PotfolioDashboard,
-  ProjectConcerns,
-  ProjectDetails,
-  ProjectPotfolioDashboard,
-  ProjectUpdates,
-  TeamComposition,
+  addProject,
+  potfolioDashboard,
+  projectConcerns,
+  projectDetails,
+  projectPotfolioDashboard,
+  projectUpdates,
+  teamComposition,
   updatingProject,
   deletingProject,
+  resourceRequest,
 } = require("../controllers/admin.controllers");
 
 //Body Parser
-AdminApp.use(express.json());
+adminApp.use(express.json());
 
 //defining routes
-AdminApp.post("/Project", AddProject);
-AdminApp.put("/Project", updatingProject);
-AdminApp.delete("/Project/:Project_Name", deletingProject);
-AdminApp.get("/PotfolioDashboard", PotfolioDashboard);
-AdminApp.get("/PotfolioDashboard/:proj_id", ProjectPotfolioDashboard);
-AdminApp.get("/PotfolioDashboard/:proj_id/ProjectDetails", ProjectDetails);
-AdminApp.get("/PotfolioDashboard/:proj_id/ProjectUpdates", ProjectUpdates);
-AdminApp.get("/PotfolioDashboard/:proj_id/TeamComposition", TeamComposition);
-AdminApp.get("/PotfolioDashboard/:proj_id/ProjectConcerns", ProjectConcerns);
+adminApp.post("/project", addProject);
+adminApp.put("/project", updatingProject);
+adminApp.delete("/project/:projectName", deletingProject);
+adminApp.get("/portfolioDashboard", potfolioDashboard);
+adminApp.get("/portfolioDashboard/:project_id", projectPotfolioDashboard);
+adminApp.get("/portfolioDashboard/:project_id/projectDetails", projectDetails);
+adminApp.get("/portfolioDashboard/:project_id/projectUpdates", projectUpdates);
+adminApp.get(
+  "/portfolioDashboard/:project_id/teamComposition",
+  teamComposition
+);
+adminApp.get(
+  "/portfolioDashboard/:project_id/projectConcerns",
+  projectConcerns
+);
+adminApp.get(
+  "/portfolioDashboard/:project_id/resourceRequest",
+  resourceRequest
+);
 //export Router Object
-module.exports = AdminApp;
+module.exports = adminApp;

@@ -1,30 +1,30 @@
-POST http://localhost:4000/Pulse/Admin/Project
+POST http://localhost:4000/pulse/admin/project
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MjkwMzUsImV4cCI6MTY3ODkwMTgzNX0.ji5Lh0Ekc0rUgk1q3g-6Rd7Yi7nMhS6Izxd_o89-rXA .Admin User
 
 {
-  "Project_Name":"p5",
-  "GDO_Head":"g3@westagilelabs.com",
-  "Project_Manager":"pm1@westagilelabs.com",
-  "Client_id":"1",
-  "Project_Status":"Completed",
-  "Project_Start_Date":"10-12-2022",
-  "Project_End_Date":"10-10-2023",
-  "Project_Fitness_Indicator":"Green",
-  "Project_Domain":"Mobile",
-  "Project_Type":"Performance Testing",
-  "Allocation_Type":"Temperory"
+  "projectName":"testproject1",
+  "gdoHead":"visnu@westagilelabs.com",
+  "projectManager":"pm4@westagilelabs.com",
+  "clientId":"1",
+  "projectStatus":"inProgress",
+  "projectStartDate":"10-12-2022",
+  "projectEndDate":null,
+  "projectFitnessIndicator":"Green",
+  "projectDomain":"Mobile",
+  "projectType":"Performance Testing"
+
 }
 ###
-PUT http://localhost:4000/Pulse/Admin/Project
+PUT http://localhost:4000/pulse/admin/project
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MjkwMzUsImV4cCI6MTY3ODkwMTgzNX0.ji5Lh0Ekc0rUgk1q3g-6Rd7Yi7nMhS6Izxd_o89-rXA .Admin User
 
 {
-  "Project_Name":"p4",
-  "GDO_Head":"g1@westagilelabs.com",
-  "Project_End_Date":"12-11-2022",
-  "Allocation_Type":"Permanent"
+  "projectName":"project4",
+  
+  "projectEndDate":"12-11-2022"
+  
  
 }
 ###
@@ -32,26 +32,28 @@ DELETE http://localhost:4000/Pulse/Admin/Project/p4
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MjkwMzUsImV4cCI6MTY3ODkwMTgzNX0.ji5Lh0Ekc0rUgk1q3g-6Rd7Yi7nMhS6Izxd_o89-rXA .Admin User
 ###
-GET http://localhost:4000/Pulse/Admin/PotfolioDashboard
+GET http://localhost:4000/pulse/admin/portfolioDashboard
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MjkwMzUsImV4cCI6MTY3ODkwMTgzNX0.ji5Lh0Ekc0rUgk1q3g-6Rd7Yi7nMhS6Izxd_o89-rXA .Admin User
 ###
-GET http://localhost:4000/Pulse/Admin/PotfolioDashboard/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MjkwMzUsImV4cCI6MTY3ODkwMTgzNX0.ji5Lh0Ekc0rUgk1q3g-6Rd7Yi7nMhS6Izxd_o89-rXA .Admin User
-
-
-###
-GET http://localhost:4000/Pulse/Admin/PotfolioDashboard/4/ProjectDetails
+GET http://localhost:4000/pulse/admin/portfolioDashboard/6
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MjkwMzUsImV4cCI6MTY3ODkwMTgzNX0.ji5Lh0Ekc0rUgk1q3g-6Rd7Yi7nMhS6Izxd_o89-rXA .Admin User
 
+
 ###
-GET http://localhost:4000/Pulse/Admin/PotfolioDashboard/2/ProjectUpdates
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MjkwMzUsImV4cCI6MTY3ODkwMTgzNX0.ji5Lh0Ekc0rUgk1q3g-6Rd7Yi7nMhS6Izxd_o89-rXA .Admin User
-###
-GET http://localhost:4000/Pulse/Admin/PotfolioDashboard/1/TeamComposition
+GET http://localhost:4000/pulse/admin/portfolioDashboard/6/projectDetails
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MjkwMzUsImV4cCI6MTY3ODkwMTgzNX0.ji5Lh0Ekc0rUgk1q3g-6Rd7Yi7nMhS6Izxd_o89-rXA .Admin User
 
 ###
-GET http://localhost:4000/Pulse/Admin/PotfolioDashboard/2/ProjectConcerns
+GET http://localhost:4000/pulse/admin/portfolioDashboard/6/projectUpdates
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MjkwMzUsImV4cCI6MTY3ODkwMTgzNX0.ji5Lh0Ekc0rUgk1q3g-6Rd7Yi7nMhS6Izxd_o89-rXA .Admin User
+###
+GET http://localhost:4000/pulse/admin/portfolioDashboard/6/teamComposition
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MjkwMzUsImV4cCI6MTY3ODkwMTgzNX0.ji5Lh0Ekc0rUgk1q3g-6Rd7Yi7nMhS6Izxd_o89-rXA .Admin User
 
 ###
+GET http://localhost:4000/Pulse/admin/portfolioDashboard/2/projectConcerns
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MjkwMzUsImV4cCI6MTY3ODkwMTgzNX0.ji5Lh0Ekc0rUgk1q3g-6Rd7Yi7nMhS6Izxd_o89-rXA .Admin User
+
+###
+GET http://localhost:4000/Pulse/admin/portfolioDashboard/2/resourceRequest
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg3MjkwMzUsImV4cCI6MTY3ODkwMTgzNX0.ji5Lh0Ekc0rUgk1q3g-6Rd7Yi7nMhS6Izxd_o89-rXA .Admin User
