@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "email":"pm1@westagilelabs.com",
-    "password":"pm1"
+    "password":""
 
 }
 ###
@@ -12,7 +12,7 @@ Content-Type: application/json
 
 {
   "email":"pm1@westagilelabs.com",
-  "password":"pm1"
+  "password":""
 }
 
 ###
@@ -28,8 +28,8 @@ Content-Type: application/json
 
 {
   "email":"s@westagilelabs.com",
-  "password":"ss",
-  "otp":"741226"
+  "password":"",
+  "otp":""
 }
 
 
