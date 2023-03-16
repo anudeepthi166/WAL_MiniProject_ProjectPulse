@@ -6,7 +6,7 @@ const userApp = express.Router();
 const {
   registeration,
   login,
-  RoleMapping,
+  roleMapping,
   forgotPassword,
   resetPassword,
 } = require("../controllers/user.controllers");
@@ -28,7 +28,7 @@ userApp.post("/forgotPassword", forgotPassword);
 userApp.put("/resetPassword", resetPassword);
 
 //RoleMapping
-userApp.post("/RoleMapping", RoleMapping);
+userApp.post("/roleMapping", roleMapping);
 
 //export router object
 module.exports = userApp;
