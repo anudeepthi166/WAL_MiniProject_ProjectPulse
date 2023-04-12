@@ -1,9 +1,12 @@
-POST http://localhost:4000/pulse/employee/pm1@westagilelabs.com/register
+
+####
+POST http://localhost:4000/pulse/employee/pm4@westagilelabs.com/register
 Content-Type: application/json
 
 {
   "email":"pm1@westagilelabs.com",
-    "password":""
+  "employeeName":"pm1",
+  "password":"pm1"
 
 }
 ###
@@ -12,7 +15,7 @@ Content-Type: application/json
 
 {
   "email":"pm1@westagilelabs.com",
-  "password":""
+  "password":"pm1pm1"
 }
 
 ###
@@ -20,7 +23,7 @@ POST http://localhost:4000/pulse/employee/pm1@westagilelabs.com/forgotPassword
 Content-Type: application/json
 
 {
-  "email":"s@westagilelabs.com"
+  "email":"sa1@westagilelabs.com"
 }
 ###
 PUT http://localhost:4000/pulse/employee/pm1@westagilelabs.com/resetPassword
@@ -28,18 +31,27 @@ Content-Type: application/json
 
 {
   "email":"s@westagilelabs.com",
-  "password":"",
-  "otp":""
+  "password":"ss",
+  "otp":"741226"
 }
 
 
 ###
-POST http://localhost:4000/Pulse/employee/roleMapping
+PUT http://localhost:4000/Pulse/employee/roleMapping
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQxMjgsImV4cCI6MTY3OTE0NjkyOH0.nI7_IcXld5yexihWp7v5WPdRbZCOqFHkZSVgW3dlpQM .superAdmin
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODAwMDM5NDcsImV4cCI6MTY4MDE3Njc0N30.ym4N-deuMF-otm5KPFRb5AXcyVGRFMq6g7NLcasRyD4 .superAdmin
 
 {
-  "SuperAdmin":"s@westagilelabs.com", 
-  "user":"pm2@westagilelabs.com",
-  "userRole":"projectManager"
+  "user":"a1@westagilelabs.com",
+  "role":"adminUser"
 }
+###
+PUT http://localhost:4000/Pulse/employee/au1@westagilelabs.com/removeRole
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODExOTU4MjYsImV4cCI6MTY4MTM2ODYyNn0.xByLz9dMM1fBciI5C4NB_e_iWIfcHjh-VvS-193bpu4 .superAdmin
+
+###
+GET http://localhost:4000/Pulse/employee/getAllUsers
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODExOTQ0MjIsImV4cCI6MTY4MTM2NzIyMn0.JJz1tOLiMwoXXcTA-HfU8VHpxGx4V1Nut7Sa1p634OM .superAdmin
+

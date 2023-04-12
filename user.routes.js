@@ -2,6 +2,10 @@
 const express = require("express");
 const userApp = express.Router();
 
+const {
+  superAdminVerifyToken,
+} = require("../middlewares/superAdmin.Verify.Token");
+
 //import controllers
 const {
   registeration,
@@ -9,6 +13,8 @@ const {
   roleMapping,
   forgotPassword,
   resetPassword,
+  getUsers,
+  deleteRole,
 } = require("../controllers/user.controllers");
 
 //Body Parser
@@ -28,7 +34,13 @@ userApp.post("/:email/forgotPassword", forgotPassword);
 userApp.put("/:email/resetPassword", resetPassword);
 
 //RoleMapping
-userApp.post("/roleMapping", roleMapping);
+userApp.put("/roleMapping", superAdminVerifyToken, roleMapping);
+
+//Removing role
+userApp.put("/:user/removeRole", superAdminVerifyToken, deleteRole);
+
+// get All Users
+userApp.get("/getAllUsers", superAdminVerifyToken, getUsers);
 
 //export router object
 module.exports = userApp;
