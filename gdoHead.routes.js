@@ -14,18 +14,24 @@ const {
   updatingTeamMembers,
   deletingTeamMembers,
   resourceRequest,
+  allconcerns,
+  raiseResourceRequest,
 } = require("../controllers/gdoHead.controllers");
 
 //Body Parser
 gdoHeadApp.use(express.json());
 
 //define routes
+gdoHeadApp.post(
+  "/:email/projectId/:projectId/resourceRequest",
+  raiseResourceRequest
+);
 gdoHeadApp.post("/:gdoHead/teamMembers", addTeamMembers);
 gdoHeadApp.put("/:gdoHead/teamMembers", updatingTeamMembers);
 gdoHeadApp.delete("/:gdoHead/teamMembers/:email", deletingTeamMembers);
 gdoHeadApp.get("/:email/portfolioDashboard", portfolioDashboard);
 gdoHeadApp.get(
-  "/:email/projectId/:project_id/portfolioDashboard/",
+  "/:email/projectId/:project_id/detailedView",
   projectPortfolioDashboard
 );
 gdoHeadApp.get("/:email/projectId/:project_id/projectDetails", projectDetails);
@@ -40,5 +46,6 @@ gdoHeadApp.get(
   projectConcerns
 );
 gdoHeadApp.get("/:email/resourceRequest", resourceRequest);
+gdoHeadApp.get("/:email/concerns", allconcerns);
 //export router object
 module.exports = gdoHeadApp;
