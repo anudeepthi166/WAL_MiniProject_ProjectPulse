@@ -3,24 +3,160 @@ const expressasynchandler = require("express-async-handler");
 
 //import Model
 const { Project } = require("../db/models/project.model");
+const { Concern } = require("../db/models/concern.model");
+const { ProjectUpdate } = require("../db/models/projectUpdate.model");
 const { Resource_Request } = require("../db/models/resourceRequest.model");
 const { Client } = require("../db/models/client.model");
 const { TeamMember } = require("../db/models/teamMembers.model");
 const { sequelize } = require("../db/db.config");
+const { User } = require("../db/models/User.model");
+
+// ASSOCIATION
+
+// //Clent And Project
+Client.Project = Client.hasMany(Project, {
+  foreignKey: { name: "clientId" },
+});
+Project.Client = Project.belongsTo(Client, {
+  foreignKey: { name: "clientId" },
+});
+
+// //Project And Concerns
+Project.Concern = Project.hasMany(Concern, {
+  foreignKey: { name: "projectId" },
+  onDelete: "CASCADE",
+});
+Concern.Project = Concern.belongsTo(Project, {
+  foreignKey: { name: "projectId" },
+});
+
+//Project And ProjectUpdate
+Project.ProjectUpdate = Project.hasMany(ProjectUpdate, {
+  foreignKey: { name: "projectId" },
+  onDelete: "CASCADE",
+});
+UpdatesOfProject = ProjectUpdate.belongsTo(Project, {
+  foreignKey: { name: "projectId" },
+});
+
+// //Project Team Members
+Project.TeamMembers = Project.hasMany(TeamMember, {
+  foreignKey: { name: "projectId" },
+  onDelete: "CASCADE",
+});
+TeamMember.Project = TeamMember.belongsTo(Project, {
+  foreignKey: { name: "projectId" },
+});
+// //Project and Resource Requests
+Project.Resource_Request = Project.hasMany(Resource_Request, {
+  foreignKey: { name: "projectId" },
+  onDelete: "CASCADE",
+});
+Resource_Request.Project = Resource_Request.belongsTo(Project, {
+  foreignKey: { name: "projectId" },
+});
 
 //import Op
 const { Op } = require("sequelize");
-const { Concern } = require("../db/models/concern.model");
+//----------------Nodemailer--------------------------//
+//import nodemailer
+const nodemailer = require("nodemailer");
+//create connectio to SMTP
+const transporter = nodemailer.createTransport({
+  service: process.env.EMAIL_SERVICE_PROVIDER,
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.EMAIL_PASSWORD,
+  },
+});
+
+//----------------------------------------------------------RAISE RESOURCE REQUEST---------------------------------------------//
+exports.raiseResourceRequest = expressasynchandler(async (req, res) => {
+  //get projects under this PROJECT MANAGER
+  console.log("______body", req.body);
+  let projects = await Project.findOne({
+    where: {
+      [Op.and]: [
+        { gdoHead: req.params.email },
+        { projectId: req.body.projectId },
+      ],
+    },
+  });
+  if (projects) {
+    //check both Project_id's
+    if (projects.dataValues.projectId == req.body.projectId) {
+      //If equal perform the action
+      let resource = await Resource_Request.create(req.body);
+      console.log(resource);
+
+      if (resource) {
+        //Get The GDO AND ADMIN
+        let gdoHead = await Project.findOne({
+          where: { projectId: req.body.projectId },
+        });
+
+        let admin = await User.findAll({ where: { role: "adminUser" } });
+
+        let admins = admin.map((userObject) => userObject.dataValues.email);
+
+        //Write The Mail
+        let mailOptions = {
+          from: process.env.EMAIL,
+          to: [gdoHead.dataValues.GDO_Head, admins],
+          subject: "Resource Request Raised ",
+          text:
+            " Hey SomeOne Raised the Resource Request for the Projects Under Your  Surveillance,See Who Raised These Requests ,  Resourcing Request Raised By " +
+            req.body.Request_Raised_By,
+        };
+        //Sending The Mail
+        transporter.sendMail(mailOptions, function (err, info) {
+          //Error Occurred
+          if (err) {
+            console.log("------ERROR-----", err);
+          }
+          //If no Error
+          else {
+            res.send({ message: "Mail Sent " + info.response });
+          }
+        });
+        res.status(201).send({
+          message: "Resource Requesting Done",
+          payload: resource.dataValues,
+        });
+      }
+    }
+  }
+  //if not equal send the message
+  else {
+    res.send({
+      message: "Contact admin to give access this project is not under you",
+    });
+  }
+});
 
 //----------------------------------------------------------ADD TEAM MEMBERS---------------------------------------------//
 exports.addTeamMembers = expressasynchandler(async (req, res) => {
   //inserti into teamMembers Table
-  let teamMembers = await TeamMember.create(req.body);
-  if (teamMembers) {
-    res.status(201).send({
-      message: "Team Details Added",
-      payload: teamMembers.dataValues,
-    });
+  console.log(req.body);
+  //find employee in emplouyees table
+  let [employee] = await sequelize.query(
+    "select * from employees where email=?",
+    {
+      replacements: [req.body.email],
+    }
+  );
+  //If emploee exists add to Team
+  if (employee.length) {
+    let teamMembers = await TeamMember.create(req.body);
+
+    if (teamMembers) {
+      res.status(201).send({
+        message: "Team Details Added",
+        payload: teamMembers.dataValues,
+      });
+    }
+  } else {
+    res.send({ message: "Employee with that mail not exists" });
   }
 });
 //----------------------------------------------------------UPDATE TEAM MEMBERS---------------------------------------------//
@@ -45,16 +181,16 @@ exports.updatingTeamMembers = expressasynchandler(async (req, res) => {
     });
 
     if (updated) {
-      res.send({ message: "Updated Team Member Details " });
+      res.status(201).send({ message: "Updated Team Member Details " });
     }
   } else {
-    res.status(403).send({ mesage: "This Project is Under Another GDO Head" });
+    res.send({ mesage: "This Project is Under Another GDO Head" });
   }
 });
 
 //----------------------------------------------------------DELETE TEAM MEMBERS---------------------------------------------//
 exports.deletingTeamMembers = expressasynchandler(async (req, res) => {
-  //get project_id of that Employee(Team Member)
+  //get project_id of that User(Team Member)
   let teamMember = await TeamMember.findOne({
     where: { email: req.params.email },
   });
@@ -108,16 +244,11 @@ exports.portfolioDashboard = expressasynchandler(async (req, res) => {
     },
 
     attributes: {
-      exclude: [
-        "projectId",
-        "gdoHead",
-        "projectManager",
-        "clientId",
-        "projectDomain",
-        "projectType",
-      ],
+      exclude: ["clientId"],
     },
-    where: { gdoHead: req.params.email },
+    where: {
+      [Op.and]: [{ gdoHead: req.params.email }, { deleteStatus: false }],
+    },
   });
 
   //Send Response
@@ -129,31 +260,30 @@ exports.projectPortfolioDashboard = expressasynchandler(async (req, res) => {
   //get details
 
   let project = await Project.findOne({
-    where: { projectId: req.params.project_id, gdoHead: req.params.email },
+    where: { projectId: req.params.project_id },
+    //include model
+    include: [
+      { association: Project.ProjectUpdate },
+      { association: Project.Concern },
+      { association: Project.TeamMembers },
+      { association: Project.Client },
+    ],
+
     attributes: {
-      exclude: [
-        "project_id",
-        "project_Name",
-        "gdoHead",
-        "projectManager",
-        "projectStatus",
-        "projectStartDate",
-        "projectEndDate",
-        "projectDomain",
-        "projectType",
-        "clientId",
-      ],
+      exclude: ["clientId"],
     },
   });
   //get team Size
   let [count] = await sequelize.query(
     "select count(Email) as teamCount from teamMembers where projectId=? and billingStatus=?",
     {
-      replacements: [req.params.project_id, "Billed"],
+      replacements: [req.params.project_id, "billed"],
     }
   );
+  console.log("----", count[0].teamCount);
   if (project) {
-    project.dataValues.teamSize = count[0].teamcount;
+    project.dataValues.count = count[0].teamCount;
+    console.log(project.dataValues);
     res.status(200).send({ message: "Project", payload: project });
   } else {
     res.status(403).send({ message: "Contact This Projetc GDO Head Or Admin" });
@@ -283,18 +413,47 @@ exports.resourceRequest = expressasynchandler(async (req, res) => {
     },
   });
   //check pojects exists or not
+
+  projects = projects.map((project) => project.dataValues.projectId);
+  console.log("------------", projects);
+  if (projects.length) {
+    //get project Ids and resource request
+    let resources = await sequelize.query(
+      "select id,requestRaisedBy,projectId,resourceDesc from resourceRequests  where projectId in(?)",
+      { replacements: [projects] }
+    );
+
+    if (resources) {
+      res
+        .status(200)
+        .send({ message: "Resource Request", payload: resources[0] });
+    }
+  } else {
+    res
+      .status(404)
+      .send({ message: "No resource Requests for the projects under you" });
+  }
+});
+
+//-----------------------------------------------------VIEW Concerns----------------------------------------//
+exports.allconcerns = expressasynchandler(async (req, res) => {
+  //get projects under gdo
+  let projects = await Project.findAll({
+    where: {
+      gdoHead: req.params.email,
+    },
+  });
+  //check pojects exists or not
   if (projects)
     projects = projects.map((project) => project.dataValues.projectId);
   console.log("------------", projects);
   //get project Ids and resource request
-  let resources = await sequelize.query(
-    "select requestRaisedBy,projectId,resourceDesc from resourceRequests  where projectId in(?)",
+  let concerns = await sequelize.query(
+    "select * from concerns  where projectId in(?)",
     { replacements: [projects] }
   );
 
-  if (resources) {
-    res
-      .status(200)
-      .send({ message: "Resource Request", payload: resources[0] });
+  if (concerns) {
+    res.status(200).send({ message: "Concern", payload: concerns[0] });
   }
 });
