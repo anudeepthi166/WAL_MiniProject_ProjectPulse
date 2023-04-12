@@ -9,8 +9,11 @@ const {
   projectDetails,
   projectUpdates,
   projectUpdating,
-  resourceRequest,
+
   teamComposition,
+  projectPorfolioDashboard,
+  portfolioDashboard,
+  editConcern,
 } = require("../controllers/projectManager.controller");
 
 //Body Parser
@@ -18,13 +21,17 @@ projectManagerApp.use(express.json());
 
 //define routes
 projectManagerApp.post("/:email/projectId/:projectId/concerns", concerns);
-projectManagerApp.post(
-  "/:email/projectId/:projectId/resourceRequest",
-  resourceRequest
-);
+projectManagerApp.put("/:email/projectId/:projectId/concerns", editConcern);
+
 projectManagerApp.post(
   "/:email/projectId/:projectId/projectUpdates",
   projectUpdating
+);
+projectManagerApp.get("/:email/portfolioDashboard", portfolioDashboard);
+
+projectManagerApp.get(
+  "/:email/projectId/:projectId/detailedView",
+  projectPorfolioDashboard
 );
 
 projectManagerApp.get(
