@@ -1,12 +1,12 @@
-POST http://localhost:4000/pulse/admin/v@westagilelabs.com/project
+POST http://localhost:4000/pulse/admin/au2@westagilelabs.com/project
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzMTAsImV4cCI6MTY3OTE0NzExMH0.l3FjTEsN48X_YxlTOANRRQ1RVudmFDz-AXadPx5-Nv4 .adminUser
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODAxMDYzMjcsImV4cCI6MTY4MDI3OTEyN30.1WfrRxUP5T4Bc1BLNcAO4WImEWqtinEvZ_sGw8w_R2w .adminUser
 
 {
   "projectName":"p5",
-  "gdoHead":"g2@westagilelabs.com",
-  "projectManager":"pm2@westagilelabs.com",
-  "clientId":"2",
+  "gdoHead":"gdo1@westagilelabs.com",
+  "projectManager":"pm1@westagilelabs.com",
+  "clientId":"1",
   "projectStatus":"inProgress",
   "projectStartDate":"10-12-2022",
   "projectEndDate":null,
@@ -16,47 +16,51 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzM
 
 }
 ###
-PUT http://localhost:4000/pulse/admin/v@westagilelabs.com/project
+PUT http://localhost:4000/pulse/admin/v@westagilelabs.com/project/3
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzMTAsImV4cCI6MTY3OTE0NzExMH0.l3FjTEsN48X_YxlTOANRRQ1RVudmFDz-AXadPx5-Nv4 .adminUser
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODA0NTAxNDAsImV4cCI6MTY4MDYyMjk0MH0.8DNnZugQNQzhn637gkHrgfJNtwP5SJGtMrTMfS5gV9M .adminUser
 
 {
-  "projectName":"p5",
+  "projectName":"p3"
   
-  "projectEndDate":"12-11-2022"
+
   
  
 }
 ###
-DELETE http://localhost:4000/pulse/admin/v@westagilelabs.com/project/p5
+PUT http://localhost:4000/pulse/admin/au1@westagilelabs.com/delete/project/2
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzMTAsImV4cCI6MTY3OTE0NzExMH0.l3FjTEsN48X_YxlTOANRRQ1RVudmFDz-AXadPx5-Nv4 .adminUser
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODA0NTAxNDAsImV4cCI6MTY4MDYyMjk0MH0.8DNnZugQNQzhn637gkHrgfJNtwP5SJGtMrTMfS5gV9M .adminUser
 ###
 GET http://localhost:4000/pulse/admin/v@westagilelabs.com/portfolioDashboard
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzMTAsImV4cCI6MTY3OTE0NzExMH0.l3FjTEsN48X_YxlTOANRRQ1RVudmFDz-AXadPx5-Nv4 .adminUser
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODA0NTAxNDAsImV4cCI6MTY4MDYyMjk0MH0.8DNnZugQNQzhn637gkHrgfJNtwP5SJGtMrTMfS5gV9M .adminUser
 ###
-GET http://localhost:4000/pulse/admin/v@westagilelabs.com/projectId/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzMTAsImV4cCI6MTY3OTE0NzExMH0.l3FjTEsN48X_YxlTOANRRQ1RVudmFDz-AXadPx5-Nv4 .adminUser
+GET http://localhost:4000/pulse/admin/a1@westagilelabs.com/projectId/1/detailedView
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODAwMTQxNDgsImV4cCI6MTY4MDE4Njk0OH0.yAJC4ZY3aNjK6cPt06NuEfUJKUfpWyzWgkRcgYBQfyw .adminUser
 
 
-###
-GET http://localhost:4000/pulse/admin/v@westagilelabscom/projectId/2/projectDetails
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzMTAsImV4cCI6MTY3OTE0NzExMH0.l3FjTEsN48X_YxlTOANRRQ1RVudmFDz-AXadPx5-Nv4 .adminUser
+###a
+GET http://localhost:4000/pulse/admin/a1@westagilelabscom/projectId/2/projectDetails
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODAwMTQxNDgsImV4cCI6MTY4MDE4Njk0OH0.yAJC4ZY3aNjK6cPt06NuEfUJKUfpWyzWgkRcgYBQfyw .adminUser
 
+###a
+GET http://localhost:4000/pulse/admin/au@westagilelabscom/projectId/2/projectUpdates
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODAwMTQxNDgsImV4cCI6MTY4MDE4Njk0OH0.yAJC4ZY3aNjK6cPt06NuEfUJKUfpWyzWgkRcgYBQfyw .adminUser
 ###
-GET http://localhost:4000/pulse/admin/v@westagilelabscom/projectId/2/projectUpdates
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzMTAsImV4cCI6MTY3OTE0NzExMH0.l3FjTEsN48X_YxlTOANRRQ1RVudmFDz-AXadPx5-Nv4 .adminUser
-###
-GET http://localhost:4000/pulse/admin/v@westagilelabs.com/projectId/2/teamComposition
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzMTAsImV4cCI6MTY3OTE0NzExMH0.l3FjTEsN48X_YxlTOANRRQ1RVudmFDz-AXadPx5-Nv4 .adminUser
+GET http://localhost:4000/pulse/admin/au@westagilelabs.com/projectId/2/teamComposition
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODAwMTQxNDgsImV4cCI6MTY4MDE4Njk0OH0.yAJC4ZY3aNjK6cPt06NuEfUJKUfpWyzWgkRcgYBQfyw .adminUser
 
 ###
 GET http://localhost:4000/pulse/admin/v@westagilelabs.com/projectId/2/projectConcerns
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzMTAsImV4cCI6MTY3OTE0NzExMH0.l3FjTEsN48X_YxlTOANRRQ1RVudmFDz-AXadPx5-Nv4 .adminUser
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODAwMTQxNDgsImV4cCI6MTY4MDE4Njk0OH0.yAJC4ZY3aNjK6cPt06NuEfUJKUfpWyzWgkRcgYBQfyw .adminUser
 
 ###
 
 GET http://localhost:4000/Pulse/admin/v@westagilelabs.com/resourceRequest
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzMTAsImV4cCI6MTY3OTE0NzExMH0.l3FjTEsN48X_YxlTOANRRQ1RVudmFDz-AXadPx5-Nv4 .adminUser
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODAwMTQxNDgsImV4cCI6MTY4MDE4Njk0OH0.yAJC4ZY3aNjK6cPt06NuEfUJKUfpWyzWgkRcgYBQfyw .adminUser
+
+###
+GET http://localhost:4000/Pulse/admin/v@westagilelabs.com/concerns
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODAwMTQxNDgsImV4cCI6MTY4MDE4Njk0OH0.yAJC4ZY3aNjK6cPt06NuEfUJKUfpWyzWgkRcgYBQfyw .adminUser
 
 ###
