@@ -1,10 +1,10 @@
 POST http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/1/concerns
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxNzksImV4cCI6MTY3OTE0ODk3OX0.wiNN64dpuVkK7RQMy3BVOcj1YDca8mvrZkvBa1SI0H4 .projectManager
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODAwNzk3MTcsImV4cCI6MTY4MDI1MjUxN30.ttAsX2XQMTLvNhimbY-4EwnMPN1Nfew8aqz5r9AwD4M .projectManager
 
 {
   
-  "projectId":"1",
+  "projectId":"2",
   "concernDesc":"Doubt",
   "concernRaisedBy":"pm1@westagilelabs.com",
   "concernRaisedOn":"2023-10-10",
@@ -15,25 +15,35 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxN
   "concernMitigatedDate":"2023-03-10"
 }
 ###
+PUT http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/1/concerns
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODEyMTA1MTgsImV4cCI6MTY4MTM4MzMxOH0.tiuWqsOfRjE9X9h7IDWxpHQ2DyFmSXXW1r1cWuWs6-U .projectManager
+
+{
+  "concernId":1,
+  "concernStatus":"mitigated",
+  "concernMitigatedDate":"2023-03-10"
+}
+###
 POST http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/1/projectUpdates
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxNzksImV4cCI6MTY3OTE0ODk3OX0.wiNN64dpuVkK7RQMy3BVOcj1YDca8mvrZkvBa1SI0H4 .projectManager
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODAwNzk3MTcsImV4cCI6MTY4MDI1MjUxN30.ttAsX2XQMTLvNhimbY-4EwnMPN1Nfew8aqz5r9AwD4M .projectManager
 
 {
   
   "projectId":"2",
   "projectStatusUpdate":"Sales",
   "scheduleStatus":"Amber",
-  "resourcingStatus":"Green",
-  "qualityStatus":"Amber",
+  "resourcingStatus":"red",
+  "qualityStatus":"green",
   "waitingForClientInputs":0,
-  "updatedOn":"2023-03-10"
+  "updatedOn":"2023-03-20"
   
 }
 ###
 POST http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/1/resourceRequest
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxNzksImV4cCI6MTY3OTE0ODk3OX0.wiNN64dpuVkK7RQMy3BVOcj1YDca8mvrZkvBa1SI0H4 .projectManager
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODAwNzk3MTcsImV4cCI6MTY4MDI1MjUxN30.ttAsX2XQMTLvNhimbY-4EwnMPN1Nfew8aqz5r9AwD4M .projectManager
 
 {
   
@@ -44,8 +54,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxN
 }
 
 ###p
+GET http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/portfolioDashboard
+Authorization: :Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODAwODg5NjUsImV4cCI6MTY4MDI2MTc2NX0.FY4Gu4ERmcyCmoteyCC36A8kuD0VoIPruZUVulkxzIY .projectManager
+
+###
+GET http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/1/detailedView
+Authorization: :Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODAwODg5NjUsImV4cCI6MTY4MDI2MTc2NX0.FY4Gu4ERmcyCmoteyCC36A8kuD0VoIPruZUVulkxzIY .projectManager
+###
 GET http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/1/projectDetails
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxNzksImV4cCI6MTY3OTE0ODk3OX0.wiNN64dpuVkK7RQMy3BVOcj1YDca8mvrZkvBa1SI0H4 .projectManager
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODAwODg5NjUsImV4cCI6MTY4MDI2MTc2NX0.FY4Gu4ERmcyCmoteyCC36A8kuD0VoIPruZUVulkxzIY .projectManager
 
 ###
 GET http://localhost:4000/Pulse/projectManager/pm1@westagilelabs.com/projectId/2/projectUpdates
@@ -55,7 +72,7 @@ GET http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxNzksImV4cCI6MTY3OTE0ODk3OX0.wiNN64dpuVkK7RQMy3BVOcj1YDca8mvrZkvBa1SI0H4 .projectManager
 
 ###
-GET http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/1/projectConcerns
+GET http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/2/projectConcerns
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxNzksImV4cCI6MTY3OTE0ODk3OX0.wiNN64dpuVkK7RQMy3BVOcj1YDca8mvrZkvBa1SI0H4 .projectManager
 
 ###
