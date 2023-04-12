@@ -1,0 +1,61 @@
+POST http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/1/concerns
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxNzksImV4cCI6MTY3OTE0ODk3OX0.wiNN64dpuVkK7RQMy3BVOcj1YDca8mvrZkvBa1SI0H4 .projectManager
+
+{
+  
+  "projectId":"1",
+  "concernDesc":"Doubt",
+  "concernRaisedBy":"pm1@westagilelabs.com",
+  "concernRaisedOn":"2023-10-10",
+  "concernSeverity":"Medium",
+  "concernIndicator":"green",
+  "concernRaisedFromClient":0,
+  "concernStatus":"Raised",
+  "concernMitigatedDate":"2023-03-10"
+}
+###
+POST http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/1/projectUpdates
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxNzksImV4cCI6MTY3OTE0ODk3OX0.wiNN64dpuVkK7RQMy3BVOcj1YDca8mvrZkvBa1SI0H4 .projectManager
+
+{
+  
+  "projectId":"2",
+  "projectStatusUpdate":"Sales",
+  "scheduleStatus":"Amber",
+  "resourcingStatus":"Green",
+  "qualityStatus":"Amber",
+  "waitingForClientInputs":0,
+  "updatedOn":"2023-03-10"
+  
+}
+###
+POST http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/1/resourceRequest
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxNzksImV4cCI6MTY3OTE0ODk3OX0.wiNN64dpuVkK7RQMy3BVOcj1YDca8mvrZkvBa1SI0H4 .projectManager
+
+{
+  
+  "requestRaisedBy":"pm1@westagilelabs.com",
+  "projectId":"2",
+  "resourceDesc":"Need Team Members"
+ 
+}
+
+###p
+GET http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/1/projectDetails
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxNzksImV4cCI6MTY3OTE0ODk3OX0.wiNN64dpuVkK7RQMy3BVOcj1YDca8mvrZkvBa1SI0H4 .projectManager
+
+###
+GET http://localhost:4000/Pulse/projectManager/pm1@westagilelabs.com/projectId/2/projectUpdates
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxNzksImV4cCI6MTY3OTE0ODk3OX0.wiNN64dpuVkK7RQMy3BVOcj1YDca8mvrZkvBa1SI0H4 .projectManager
+###
+GET http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/1/teamComposition
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxNzksImV4cCI6MTY3OTE0ODk3OX0.wiNN64dpuVkK7RQMy3BVOcj1YDca8mvrZkvBa1SI0H4 .projectManager
+
+###
+GET http://localhost:4000/pulse/projectManager/pm1@westagilelabs.com/projectId/1/projectConcerns
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzYxNzksImV4cCI6MTY3OTE0ODk3OX0.wiNN64dpuVkK7RQMy3BVOcj1YDca8mvrZkvBa1SI0H4 .projectManager
+
+###

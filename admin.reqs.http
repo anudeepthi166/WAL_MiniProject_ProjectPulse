@@ -1,0 +1,62 @@
+POST http://localhost:4000/pulse/admin/v@westagilelabs.com/project
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzMTAsImV4cCI6MTY3OTE0NzExMH0.l3FjTEsN48X_YxlTOANRRQ1RVudmFDz-AXadPx5-Nv4 .adminUser
+
+{
+  "projectName":"p5",
+  "gdoHead":"g2@westagilelabs.com",
+  "projectManager":"pm2@westagilelabs.com",
+  "clientId":"2",
+  "projectStatus":"inProgress",
+  "projectStartDate":"10-12-2022",
+  "projectEndDate":null,
+  "projectFitnessIndicator":"Green",
+  "projectDomain":"Mobile",
+  "projectType":"Performance Testing"
+
+}
+###
+PUT http://localhost:4000/pulse/admin/v@westagilelabs.com/project
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzMTAsImV4cCI6MTY3OTE0NzExMH0.l3FjTEsN48X_YxlTOANRRQ1RVudmFDz-AXadPx5-Nv4 .adminUser
+
+{
+  "projectName":"p5",
+  
+  "projectEndDate":"12-11-2022"
+  
+ 
+}
+###
+DELETE http://localhost:4000/pulse/admin/v@westagilelabs.com/project/p5
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzMTAsImV4cCI6MTY3OTE0NzExMH0.l3FjTEsN48X_YxlTOANRRQ1RVudmFDz-AXadPx5-Nv4 .adminUser
+###
+GET http://localhost:4000/pulse/admin/v@westagilelabs.com/portfolioDashboard
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzMTAsImV4cCI6MTY3OTE0NzExMH0.l3FjTEsN48X_YxlTOANRRQ1RVudmFDz-AXadPx5-Nv4 .adminUser
+###
+GET http://localhost:4000/pulse/admin/v@westagilelabs.com/projectId/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzMTAsImV4cCI6MTY3OTE0NzExMH0.l3FjTEsN48X_YxlTOANRRQ1RVudmFDz-AXadPx5-Nv4 .adminUser
+
+
+###
+GET http://localhost:4000/pulse/admin/v@westagilelabscom/projectId/2/projectDetails
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzMTAsImV4cCI6MTY3OTE0NzExMH0.l3FjTEsN48X_YxlTOANRRQ1RVudmFDz-AXadPx5-Nv4 .adminUser
+
+###
+GET http://localhost:4000/pulse/admin/v@westagilelabscom/projectId/2/projectUpdates
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzMTAsImV4cCI6MTY3OTE0NzExMH0.l3FjTEsN48X_YxlTOANRRQ1RVudmFDz-AXadPx5-Nv4 .adminUser
+###
+GET http://localhost:4000/pulse/admin/v@westagilelabs.com/projectId/2/teamComposition
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzMTAsImV4cCI6MTY3OTE0NzExMH0.l3FjTEsN48X_YxlTOANRRQ1RVudmFDz-AXadPx5-Nv4 .adminUser
+
+###
+GET http://localhost:4000/pulse/admin/v@westagilelabs.com/projectId/2/projectConcerns
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzMTAsImV4cCI6MTY3OTE0NzExMH0.l3FjTEsN48X_YxlTOANRRQ1RVudmFDz-AXadPx5-Nv4 .adminUser
+
+###
+
+GET http://localhost:4000/Pulse/admin/v@westagilelabs.com/resourceRequest
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Nzg5NzQzMTAsImV4cCI6MTY3OTE0NzExMH0.l3FjTEsN48X_YxlTOANRRQ1RVudmFDz-AXadPx5-Nv4 .adminUser
+
+###
