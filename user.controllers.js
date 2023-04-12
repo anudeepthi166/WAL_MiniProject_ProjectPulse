@@ -11,7 +11,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 //import Employee,User model
-const { Employee } = require("../db/models/employee.model");
+const { User } = require("../db/models/User.model");
 //import Controller from admin
 const { PotfolioDashboard } = require("./admin.controllers");
 
@@ -37,47 +37,72 @@ let otps = {};
 //-------------------------------------------Registration-------------------------------------//
 exports.registeration = expressasynchandler(async (req, res) => {
   //Extract fields from request body
-  let { email, password } = req.body;
-  //get the role of employee
-  let employee = await Employee.findOne({ where: { email: email } });
-  if (employee) {
-    let role = employee.dataValues.role;
-    //check the role of employee
-    if (
-      role == "adminUser" ||
-      role == "gdoHead" ||
-      role == "projectManager" ||
-      role == "superAdmin" ||
-      role == "hrManager"
-    ) {
-      //Check email domain
-      if (
-        /^([A-Za-z0-9_\.])+\@(westagilelabs|WESTAGILELABS)+\.(com)$/.test(email)
-      ) {
-        //Hash the password
-        password = await bcrypt.hash(password, 5);
+  let { employeeName, email, password } = req.body;
+  //check if user exists in employee table
+  // console.log(req.body.username)
+  let [emp] = await sequelize.query(
+    `select * from employees where email="${email}"`
+  );
 
-        //adding employee details to database
-        let employee = await Employee.update(
-          { password: password },
-          { where: { email: email } }
-        );
-
-        //sending employee details for conformation
-        res.status(201).send({
-          message: "Employee Regitered",
-          payload: employee.dataValues,
-        });
-      }
-      //Not Valid Gmail id
-      else {
-        res.send({ message: "Register with the Organisation Email Only" });
-      }
-    }
+  console.log("emp", emp);
+  if (emp.length == 0) {
+    res.send({ message: "Only employees can register" });
   } else {
-    res.status(404).send({ message: "Employee Details not Found" });
+    //check if user already registered
+    let user = await User.findOne({ where: { email: email } });
+    // console.log(user)
+    //if user already registered
+    if (user !== null) {
+      res.send({ message: "user already registered" });
+    }
+    //if user did not register
+    else {
+      req.body.email = req.body.email.toLowerCase();
+      req.body.password = await bcrypt.hash(req.body.password, 5);
+      await User.create(req.body);
+      res.status(201).send({ message: "User registered" });
+    }
   }
 });
+//get the role of employee
+// let employee = await Employee.findOne({ where: { email: email } });
+// if (employee) {
+//   let role = employee.dataValues.role;
+//   //check the role of employee
+//   if (
+//     role == "adminUser" ||
+//     role == "gdoHead" ||
+//     role == "projectManager" ||
+//     role == "superAdmin" ||
+//     role == "hrManager"
+//   ) {
+//     //Check email domain
+//     if (
+//       /^([A-Za-z0-9_\.])+\@(westagilelabs|WESTAGILELABS)+\.(com)$/.test(email)
+//     ) {
+//       //Hash the password
+//       password = await bcrypt.hash(password, 5);
+
+//       //adding employee details to database
+//       let employee = await Employee.update(
+//         { password: password },
+//         { where: { email: email } }
+//       );
+
+//       //sending employee details for conformation
+//       res.status(201).send({
+//         message: "Employee Regitered",
+//         payload: employee.dataValues,
+//       });
+//     }
+//     //Not Valid Gmail id
+//     else {
+//       res.send({ message: "Register with the Organisation Email Only" });
+//     }
+//   }
+// } else {
+//   res.status(404).send({ message: "Employee Details not Found" });
+// }
 
 //-------------------------------------------Login-------------------------------------//
 exports.login = expressasynchandler(async (req, res) => {
@@ -94,7 +119,7 @@ exports.login = expressasynchandler(async (req, res) => {
   //Organization Email
   else {
     //check email exists or not
-    let user = await Employee.findOne({ where: { email: email } });
+    let user = await User.findOne({ where: { email: email } });
     if (user) {
       //check Password
 
@@ -102,7 +127,7 @@ exports.login = expressasynchandler(async (req, res) => {
       if (result) {
         //check Role
         let role = user.dataValues.role;
-        console.log("-------------------------", role);
+        // console.log("-------------------------", role);
         if (
           role == "adminUser" ||
           role == "gdoHead" ||
@@ -116,49 +141,28 @@ exports.login = expressasynchandler(async (req, res) => {
           });
           signedToken = signedToken.concat(" .").concat(role);
           //if role is admin user ,send all the project details
-          if (role == "adminUser") {
-            let dashboard = await Project.findAll();
-
-            res.send({
-              message: "login Success",
-              token: signedToken,
-            });
-          }
-          //
-          if (role == "superAdmin") {
-            let dashboard = await Employee.findAll({
-              attributes: {
-                exclude: ["employeeName", "password"],
-              },
-            });
-
-            res.status(200).send({
-              message: "login Success",
-              token: signedToken,
-              payload: dashboard,
-            });
-          } else {
-            res.send({
-              message: "login Success",
-              token: signedToken,
-            });
-          }
+          delete user.dataValues.password;
+          res.send({
+            message: "Success",
+            token: signedToken,
+            user: user.dataValues,
+          });
         }
 
         //Other Role
         else {
-          res.status(200).send({
+          res.send({
             message:
               "Only Special Users Has Access, Contact Super Admin for more info",
           });
         }
       } else {
-        res.status(401).send({ message: "Invalid Password" });
+        res.send({ message: "Invalid Password" });
       }
     }
-    //user not in Employees
+    //user not in Users
     else {
-      res.status(404).send({ message: "Employee Not Exists" });
+      res.send({ message: "User Not Registered" });
     }
   }
 });
@@ -203,7 +207,7 @@ exports.resetPassword = expressasynchandler(async (req, res) => {
     //Hash Th Password
     let hashedPassword = await bcrypt.hash(req.body.password, 5);
 
-    let [updated] = await Employee.update(
+    let [updated] = await User.update(
       { password: hashedPassword },
       { where: { email: req.body.email } }
     );
@@ -219,37 +223,55 @@ exports.resetPassword = expressasynchandler(async (req, res) => {
 
 //-------------------------------------------Role Mapping-------------------------------------//
 exports.roleMapping = expressasynchandler(async (req, res) => {
-  let { superAdmin, user, userRole } = req.body;
-  let bearerToken = req.headers.authorization;
-  let role = bearerToken.split(".")[3];
-  //check Role
-  if (role == "superAdmin") {
-    let employee = await Employee.findOne({ where: { email: user } });
+  let { email, role } = req.body;
+  let employee = await User.findOne({ where: { email: email } });
 
-    //if employee exists assign role
-    if (employee) {
-      let [updatedCount] = await Employee.update(
-        { role: req.body.userRole },
-        { where: { email: req.body.user } }
-      );
+  //if employee exists assign role
+  if (employee) {
+    let [updatedCount] = await User.update(
+      { role: role },
+      { where: { email: email } }
+    );
 
-      if (updatedCount != 0) {
-        res.status(200).send({
-          message: "Role Mapped Successfully",
-          payload: [user, userRole],
-        });
-      } else {
-        res.send({
-          message:
-            "Unable To Map Roles Please Recheck the Role You Are Trying To Map",
-        });
-      }
+    if (updatedCount != 0) {
+      res.status(200).send({
+        message: "Role Mapped Successfully",
+        payload: [email, role],
+      });
     } else {
-      res.status(404).send({ message: "Please Register the Employee" });
+      res.send({
+        message:
+          "You have selected the Role which is already mapped to this employee",
+      });
     }
+  } else {
+    res.status(404).send({ message: "Please Register the User" });
   }
-  //If not Super Admin
-  else {
-    res.send({ message: "Contact Super Admin" });
+});
+//------------------------------------------Remove Role-------------------------------------//
+exports.deleteRole = expressasynchandler(async (req, res) => {
+  //run the query
+  let [updatedCount] = await User.update(
+    { role: "" },
+    { where: { email: req.params.user } }
+  );
+  console.group(updatedCount);
+  if (updatedCount) {
+    res.send({ message: "Removed the role" });
+  } else {
+    res.send({ message: "Currently No role is mapped to this employee" });
   }
+});
+
+//------------------------------------------Get All Users-------------------------------------//
+exports.getUsers = expressasynchandler(async (req, res) => {
+  //get all users
+  let users = await User.findAll({
+    attributes: {
+      exclude: ["password"],
+    },
+  });
+  users = users.map((userObj) => userObj.dataValues);
+  console.log("users---", users);
+  res.status(200).send({ message: "All User Details", payload: users });
 });
