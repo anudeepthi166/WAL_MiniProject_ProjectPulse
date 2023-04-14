@@ -29,7 +29,7 @@
   
   For this Project Create a database named ```Project_Pulse```
   
-  Here,We assumed  some employee details are stored in the database ,and when the super admin assign some roles then one can able to do registrationa and they can do login
+  Here,We assumed  some employee details are stored in the database ,employees from our organization can register into this application and when the super admin assign some roles then only one can able to login into the application
   
  # OVERVIEW
  
