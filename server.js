@@ -29,7 +29,7 @@ const {
 } = require("./middlewares/ProjectManager.Verify.Token");
 const {
   AdminUserVerifyToken,
-} = require("./middlewares/AdminUser.Verify>Token");
+} = require("./middlewares/AdminUser.Verify.Token");
 const { GdoHeadVerifyToken } = require("./middlewares/GdoHead.Verify.Token");
 
 //configuring dotnev
